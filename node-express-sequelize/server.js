@@ -4,15 +4,28 @@ var Sequelize = require('sequelize');
 var sequelize = new Sequelize('test', 'test', null, { dialect: 'sqlite', storage: './db.test.sqlite' });
 
 var User = sequelize.define('User', {
-  username: Sequelize.STRING
+  username: Sequelize.STRING,
+
 });
 
 /*  Create a '/users' route that responds to 
     a GET request with all users in the database */
 
+app.get('/users',function(req , res){
+	User.findAll()
+	.then(function(users){
+	req.send(users)
+	});
+	
+})
+   
+/*Uses the provided Sequelize `User` model to send all `users` currently in the database*/
 
 
 module.exports = { 
   app: app,
   User: User
 };
+
+
+
